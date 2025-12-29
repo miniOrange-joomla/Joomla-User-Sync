@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.5.1" method="upgrade">
+ 
+	<name>COM_MINIORANGE_USERSYNC</name>
+	<creationDate>December 2022</creationDate>
+	<author>miniOrange Security Software Pvt. Ltd.</author>
+	<authorEmail>info@xecurify.com</authorEmail>
+	<authorUrl>http://miniorange.com</authorUrl>
+	<copyright>Copyright(C) 2015 miniOrange. All Rights Reserved.</copyright>
+	<license>GNU General Public License version 3; see LICENSE.txt</license>
+	<version>1.0.5</version>
+	<description>COM_MINIORANGE_USERSYNC_DESCRIPTION</description>
+ 
+	<install> 
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+		
+	<administration>
+		<menu link="option=com_miniorange_usersync&amp;view=accountsetup">COM_MINIORANGE_USER_SYNC_MENU</menu>
+		<submenu>
+			<menu link="option=com_miniorange_usersync&amp;view=accountsetup&amp;tab-panel=mo_sync_overview">COM_MINIORANGE_USER_SYNC_OVERVIEW</menu>
+		</submenu>
+		
+		<files folder="admin">
+			<filename>index.html</filename>
+			<filename>miniorange_usersync.php</filename>
+			<filename>controller.php</filename>
+			<folder>assets</folder>
+			<folder>helpers</folder>
+			<folder>sql</folder>
+			<folder>models</folder>
+			<folder>views</folder>
+			<folder>controllers</folder>
+		</files>
+		<languages folder="admin/language">
+        	<language tag="en-GB">en-GB/en-GB.com_miniorange_usersync.ini</language>
+            <language tag="en-GB">en-GB/en-GB.com_miniorange_usersync.sys.ini</language>
+			<language tag="cs-CZ">cs-CZ/cs-CZ.com_miniorange_usersync.ini</language>
+			<language tag="cs-CZ">cs-CZ/cs-CZ.com_miniorange_usersync.sys.ini</language>
+			<language tag="da-DK">da-DK/da-DK.com_miniorange_usersync.ini</language>
+			<language tag="da-DK">da-DK/da-DK.com_miniorange_usersync.sys.ini</language>
+			<language tag="de-DE">de-DE/de-DE.com_miniorange_usersync.ini</language>
+			<language tag="de-DE">de-DE/de-DE.com_miniorange_usersync.sys.ini</language>
+			<language tag="el-GR">el-GR/el-GR.com_miniorange_usersync.ini</language>
+			<language tag="el-GR">el-GR/el-GR.com_miniorange_usersync.sys.ini</language>
+			<language tag="fr-FR">fr-FR/fr-FR.com_miniorange_usersync.ini</language>
+			<language tag="fr-FR">fr-FR/fr-FR.com_miniorange_usersync.sys.ini</language>
+			<language tag="hu-HU">hu-HU/hu-HU.com_miniorange_usersync.ini</language>
+			<language tag="hu-HU">hu-HU/hu-HU.com_miniorange_usersync.sys.ini</language>
+			<language tag="it-IT">it-IT/it-IT.com_miniorange_usersync.ini</language>
+			<language tag="it-IT">it-IT/it-IT.com_miniorange_usersync.sys.ini</language>
+			<language tag="ja-JP">ja-JP/ja-JP.com_miniorange_usersync.ini</language>
+			<language tag="ja-JP">ja-JP/ja-JP.com_miniorange_usersync.sys.ini</language>
+			<language tag="nl-NL">nl-NL/nl-NL.com_miniorange_usersync.ini</language>
+			<language tag="nl-NL">nl-NL/nl-NL.com_miniorange_usersync.sys.ini</language>
+			<language tag="en-GB">en-GB/en-GB.com_miniorange_usersync.ini</language>
+			<language tag="en-GB">en-GB/en-GB.com_miniorange_usersync.sys.ini</language>
+			<language tag="pt-BR">pt-BR/pt-BR.com_miniorange_usersync.ini</language>
+			<language tag="pt-BR">pt-BR/pt-BR.com_miniorange_usersync.sys.ini</language>
+			<language tag="sr-RS">sr-RS/sr-RS.com_miniorange_usersync.ini</language>
+			<language tag="sr-RS">sr-RS/sr-RS.com_miniorange_usersync.sys.ini</language>
+			<language tag="sr-YU">sr-YU/sr-YU.com_miniorange_usersync.ini</language>
+			<language tag="sr-YU">sr-YU/sr-YU.com_miniorange_usersync.sys.ini</language>
+			<language tag="ru-RU">ru-RU/ru-RU.com_miniorange_usersync.ini</language>
+			<language tag="ru-RU">ru-RU/ru-RU.com_miniorange_usersync.sys.ini</language>
+			<language tag="sv-SE">sv-SE/sv-SE.com_miniorange_usersync.ini</language>
+			<language tag="sv-SE">sv-SE/sv-SE.com_miniorange_usersync.sys.ini</language>
+			<language tag="th-TH">th-TH/th-TH.com_miniorange_usersync.ini</language>
+			<language tag="th-TH">th-TH/th-TH.com_miniorange_usersync.sys.ini</language>
+			<language tag="zh-CN">zh-CN/zh-CN.com_miniorange_usersync.ini</language>
+			<language tag="zh-CN">zh-CN/zh-CN.com_miniorange_usersync.sys.ini</language>
+		</languages>
+	</administration>
+	<updateservers>
+		<server type="extension" priority="1" name="UserSync">http://miniorange.com/joomla_usersync_update.xml</server>
+	</updateservers>
+</extension>

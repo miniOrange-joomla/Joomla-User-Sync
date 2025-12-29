@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.0" type="plugin" group="user" method="upgrade">
+	<name>User - miniOrange User Sync</name>
+	<author>miniOrange Security Software Pvt. Ltd.</author>
+	<license>GNU General Public License version 3; see LICENSE.txt</license>
+	<authorEmail>info@xecurify.com</authorEmail>
+	<authorUrl>www.miniorange.com</authorUrl>
+	<creationDate>December 2022</creationDate>
+	<copyright>Copyright(C) 2015 miniOrange. All Rights Reserved.</copyright>
+	<version>1.0.5</version>
+	<description>System - Plugin for miniOrange User Sync</description>
+	<scriptfile>my_script.php</scriptfile>
+	<files>
+		<filename plugin="miniorangeusersync">miniorangeusersync.php</filename>
+	</files>
+	<languages>
+        	<language tag="en-GB">language/en-GB/en-GB.plg_user_miniorangeusersync.ini</language>
+        	<language tag="en-GB">language/en-GB/en-GB.plg_user_miniorangeusersync.sys.ini</language>
+    </languages>
+</extension>

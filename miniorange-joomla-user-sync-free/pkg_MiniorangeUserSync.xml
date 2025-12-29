@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.0" type="package" method="upgrade">
+    <name>User Provisioning/ User Sync</name>
+    <packagename>MiniorangeUserSync</packagename>
+    <version>1.0.5</version>
+    <author>miniOrange Security Software Pvt. Ltd.</author>
+    <license>GNU General Public License version 3; see LICENSE.txt</license>
+    <authorEmail>info@xecurify.com</authorEmail>
+    <authorUrl>www.miniorange.com</authorUrl>
+    <creationDate>September 2022</creationDate>
+    <copyright>Copyright(C) 2015 miniOrange. All Rights Reserved.</copyright>
+    <description>Plugin for User Provisioning/ User Sync installed successfully</description>
+    <scriptfile>pkg_script.php</scriptfile>
+    <files>
+        <file type="component" id="miniorangeusersynccomponent" >com_miniorange_usersync.zip</file>
+        <file type="plugin" id="miniorangeusersync" group="user">plg_user_usersync.zip</file>
+        <file type="plugin" id="miniorangeusersyncc" group="system">plg_system_miniorangeusersync.zip</file>
+    </files>
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.pkg_miniorangeusersync.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.pkg_miniorangeusersync.sys.ini</language>
+    </languages>
+	<updateservers>
+		<server type="extension" priority="1" name="UserSync">http://miniorange.com/joomla_usersync_update.xml</server>
+	</updateservers>
+</extension>
