@@ -273,7 +273,7 @@ class MoCognito
         }
     
         // Check Joomla user
-        $db = Factory::getDBO();
+        $db = MoUserSyncUtility::moGetDatabase();
         $query = $db->getQuery(true)
             ->select('*')
             ->from('#__users')
@@ -287,7 +287,7 @@ class MoCognito
     
         if (!$joomla_user) {
             Authorization::moCreateUserInJoomla($moUserDetails, 'Cognito');
-            $db = Factory::getDbo();
+            $db = MoUserSyncUtility::moGetDatabase();
             $query = $db->getQuery(true)
                 ->update($db->quoteName('#__users'))
                 ->set($db->quoteName('block') . ' = 0')

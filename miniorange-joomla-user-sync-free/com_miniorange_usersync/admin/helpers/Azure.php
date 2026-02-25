@@ -239,7 +239,7 @@ class Azure
         if(isset($isError->access_token)){
 
             $usernameToSync = $username[0]['Name'];
-            $db = Factory::getDBO();
+            $db = MoUserSyncUtility::moGetDatabase();
             $query = $db->getQuery(true)
             ->select('*')
             ->from('#__users')

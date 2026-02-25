@@ -127,30 +127,10 @@ class Authorization{
         return $content;
     }
 
-    // public static function moCreateUserInJoomla($moUserDetails, $appName){
-    //     $date = date('d-m-y h:i:s');
-    //     $db = Factory::getDbo();
-    //     $query = $db->getQuery(true);
-    //     $fields = array(
-        
-    //         $db->quoteName('email') . ' = ' . $db->quote($moUserDetails['email']),
-    //         $db->quoteName('name') . ' = ' . $db->quote($moUserDetails['name']),
-    //         $db->quoteName('username') . ' = ' . $db->quote($moUserDetails['username']),
-    //         $db->quoteName('registerDate') . ' = ' . $db->quote($date),
-    //         $db->quoteName('params') . ' = ' . $db->quote(""),
-    //         $db->quoteName('block') . ' = ' . $db->quote($moUserDetails['enabled']),
-    //     );
-
-    //     $query->insert($db->quoteName('#__users'))->set($fields);
-    //     $db->setQuery($query);
-    //     $db->execute();
-
-    // }
-
     public static function moCreateUserInJoomla($moUserDetails, $appName)
     {
         $date = date('Y-m-d H:i:s');
-        $db = Factory::getDbo();
+        $db = MoUserSyncUtility::moGetDatabase();
 
         // Get default user group from Joomla configuration
         $config = Factory::getConfig();

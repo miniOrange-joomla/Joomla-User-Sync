@@ -12,6 +12,7 @@ jimport('com_miniorange_usersync.admin.helpers.MoUserSyncCustomer');
  * @contact     info@xecurify.com
  */
 use Joomla\CMS\Factory;
+include_once JPATH_SITE . DIRECTORY_SEPARATOR . 'administrator' . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_miniorange_usersync' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'MoUserSyncUtility.php';
 class plgUserMiniorangeUserSyncInstallerScript
 {
     /**
@@ -23,7 +24,7 @@ class plgUserMiniorangeUserSyncInstallerScript
      */
     public function install($parent) 
     {
-        $db  = Factory::getDbo();
+        $db  = MoUserSyncUtility::moGetDatabase();
           $query1 = $db->getQuery(true);
           $query1->update('#__extensions');
           $query1->set($db->quoteName('enabled') . ' = 1');

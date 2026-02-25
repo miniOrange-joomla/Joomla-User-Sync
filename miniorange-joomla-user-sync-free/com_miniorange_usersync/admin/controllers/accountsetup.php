@@ -539,6 +539,7 @@ class MiniorangeUsersyncControllerAccountsetup extends FormController
         $post = ($input && $input->post) ? $input->post->getArray() : [];
 		$query_email = isset($post['mo_query_email'])? $post['mo_query_email'] : '';
 		$query = isset($post['mo_query']) ? $post['mo_query'] : '';
+		
 
 		if (sizeof(array_unique(str_split($query))) < 10) {
 			$this->setRedirect('index.php?option=com_miniorange_usersync&view=accountsetup', Text::_('COM_MINIORANGE_ENTER_PROPER_QUERY'), 'error');
@@ -551,9 +552,35 @@ class MiniorangeUsersyncControllerAccountsetup extends FormController
 		} else {
 			$query = $post['mo_query'];
 			$email = $post['mo_query_email'];
-			$phone = $post['mo_query_phone'];
+			$phone = isset($post['mo_query_phone']) ? $post['mo_query_phone'] : '';
+			$country_code = isset($post['country_code']) ? $post['country_code'] : '';
+			$client_timezone = isset($post['client_timezone']) ? $post['client_timezone'] : '';
+			$client_timezone_offset = isset($post['client_timezone_offset']) ? $post['client_timezone_offset'] : '';
+
+            // Phone: prefix with selected dial code if user entered local number
+            $dial = preg_replace('/\D+/', '', (string) $country_code);
+            $phone_raw = trim((string) $phone);
+            if (!empty($dial) && $phone_raw !== '' && strpos($phone_raw, '+') !== 0) {
+                $local = preg_replace('/\D+/', '', $phone_raw);
+                $phone = '+' . $dial . ($local !== '' ? (' ' . $local) : '');
+            } elseif (!empty($dial) && $phone_raw === '') {
+                $phone = '+' . $dial;
+            }
+
+            // Timezone (priority: browser tz -> Joomla user tz -> global config offset)
+            $user = Factory::getUser();
+            $config = Factory::getConfig();
+            $tzName = trim((string) $client_timezone);
+            if ($tzName === '') {
+                $tzName = (string) $user->getParam('timezone');
+            }
+            if (trim((string) $tzName) === '') {
+                $tzName = (string) $config->get('offset');
+            }
+            $timezone = MoUserSyncUtility::moFormatTimezoneWithUtcOffset($tzName, $client_timezone_offset);
+
 			$contact_us = new MoUserSyncCustomer();
-			$submited = json_decode($contact_us->moSubmitContactUs($email, $phone, $query),true);
+			$submited = json_decode($contact_us->moSubmitContactUs($email, $phone, $query, $timezone),true);
 			if(json_last_error() == JSON_ERROR_NONE) {
 				if(is_array($submited) && array_key_exists('status', $submited) && $submited['status'] == 'ERROR'){
 					$this->setRedirect('index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=mo_support&app=other', $submited['message'],'error');

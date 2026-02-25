@@ -7,7 +7,7 @@
 	<authorUrl>www.miniorange.com</authorUrl>
 	<creationDate>December 2022</creationDate>
 	<copyright>Copyright(C) 2015 miniOrange. All Rights Reserved.</copyright>
-	<version>1.0.5</version>
+	<version>1.0.6</version>
 	<description>System - Plugin for miniOrange User Sync</description>
 	<scriptfile>my_script.php</scriptfile>
 	<files>

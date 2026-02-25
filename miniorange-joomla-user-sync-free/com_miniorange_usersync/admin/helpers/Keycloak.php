@@ -235,7 +235,7 @@ class MoKeycloak
             
             $usernameToSync = $username[0]['Name'];
 
-            $db = Factory::getDBO();
+            $db = MoUserSyncUtility::moGetDatabase();
             $query = $db->getQuery(true)
                 ->select('*')
                 ->from('#__users')
@@ -293,7 +293,7 @@ class MoKeycloak
         
         if(empty($isError)){
 
-            $db = Factory::getDBO();
+            $db = MoUserSyncUtility::moGetDatabase();
             $query = $db->getQuery(true)
                 ->select('*')
                 ->from('#__users')

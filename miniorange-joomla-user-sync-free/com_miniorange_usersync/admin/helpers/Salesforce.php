@@ -14,7 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 $userList = array();
 Factory::getApplication()->set('UserList', $userList);
-
+include_once JPATH_SITE . DIRECTORY_SEPARATOR . 'administrator' . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_miniorange_usersync' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'MoUserSyncUtility.php';
 class Salesforce
 {
     private $consumerKey = "";
@@ -305,9 +305,11 @@ class Salesforce
     {
         $salesforceDetails = new Salesforce();
         
-        // For test connection, we need username and password
-        // The username parameter here is the Salesforce username/email
-        // We'll need to get password from config or use OAuth token if available
+        /**
+        * For test connection, we need username and password
+        * The username parameter here is the Salesforce username/email
+        * We'll need to get password from config or use OAuth token if available
+        */
         
         // Try to get access token using username-password flow
         // Note: In production, you might want to store credentials securely
@@ -711,7 +713,7 @@ class Salesforce
         }
 
         // Get Joomla user details
-        $db = Factory::getDBO();
+        $db = MoUserSyncUtility::moGetDatabase();
         $query = $db->getQuery(true)
             ->select('*')
             ->from('#__users')
@@ -1052,7 +1054,7 @@ class Salesforce
         }
 
         // Check if user already exists in Joomla
-        $db = Factory::getDBO();
+        $db = MoUserSyncUtility::moGetDatabase();
         $query = $db->getQuery(true)
             ->select('*')
             ->from('#__users')

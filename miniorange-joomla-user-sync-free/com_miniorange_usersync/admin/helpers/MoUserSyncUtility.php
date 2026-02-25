@@ -12,11 +12,12 @@
 defined( '_JEXEC' ) or die( 'Restricted access' );
 use Joomla\CMS\Factory;
 use Joomla\CMS\Version;
+use Joomla\Database\DatabaseInterface;
 
 class MoUserSyncUtility{
 	
 	public static function moGetDetails(String $tablename){
-		$db = Factory::getDbo();
+		$db = self::moGetDatabase();
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from($db->quoteName($tablename));
@@ -27,9 +28,20 @@ class MoUserSyncUtility{
 		return $customer_details;
 	}
 
+    public static function moGetDatabase()
+    {
+        // Joomla 4+
+        if (class_exists(DatabaseInterface::class) && method_exists(Factory::class, 'getContainer')) {
+            return Factory::getContainer()->get(DatabaseInterface::class);
+        }
+
+        // Joomla 3 fallback
+        return Factory::getDbo();
+    }
+
 	public static function moUpdateQuery($database_name, $updatefieldsarray){
 
-        $db = Factory::getDbo();
+        $db = self::moGetDatabase();
 		$query = $db->getQuery(true);
         foreach ($updatefieldsarray as $key => $value)
         {
@@ -50,7 +62,7 @@ class MoUserSyncUtility{
 
 	public static function moGetPluginVersion()
 	{
-	$db = Factory::getDbo();
+	$db = self::moGetDatabase();
 	$dbQuery = $db->getQuery(true)
 	->select('manifest_cache')
 	->from($db->quoteName('#__extensions'))
@@ -61,10 +73,44 @@ class MoUserSyncUtility{
 	return($manifest->version);
 	}
 
+    /**
+     * Formats timezone as: America/Chicago (UTC -06:00)
+     * If $browserOffsetMinutes is provided (JS Date.getTimezoneOffset), it is used; otherwise server computes offset (DST-safe).
+     */
+    public static function moFormatTimezoneWithUtcOffset($tzName, $browserOffsetMinutes = null)
+    {
+        $tzName = trim((string) $tzName);
+        if ($tzName === '') {
+            $tzName = 'UTC';
+        }
+
+        if ($browserOffsetMinutes !== null && preg_match('/^-?\d+$/', (string) $browserOffsetMinutes)) {
+            $m = (int) $browserOffsetMinutes; // minutes behind UTC
+            $sign = $m > 0 ? '-' : '+';
+            $abs = abs($m);
+            $hh = str_pad((string) floor($abs / 60), 2, '0', STR_PAD_LEFT);
+            $mm = str_pad((string) ($abs % 60), 2, '0', STR_PAD_LEFT);
+            return $tzName . ' (UTC ' . $sign . $hh . ':' . $mm . ')';
+        }
+
+        try {
+            $tzObj = new \DateTimeZone($tzName);
+            $dt = new \DateTime('now', $tzObj);
+            $offsetSeconds = (int) $dt->getOffset();
+            $sign = $offsetSeconds >= 0 ? '+' : '-';
+            $abs = abs($offsetSeconds);
+            $hh = str_pad((string) floor($abs / 3600), 2, '0', STR_PAD_LEFT);
+            $mm = str_pad((string) floor(($abs % 3600) / 60), 2, '0', STR_PAD_LEFT);
+            return $tzName . ' (UTC ' . $sign . $hh . ':' . $mm . ')';
+        } catch (\Exception $e) {
+            return 'UTC (UTC +00:00)';
+        }
+    }
+
 
 	public static function moGetJoomlaGroups(){
 		
-		$db = Factory::getDbo();
+		$db = self::moGetDatabase();
 		$db->setQuery($db->getQuery(true)
 			->select('*')
 			->from("#__usergroups")
@@ -75,7 +121,7 @@ class MoUserSyncUtility{
 
     public static function moSelectQuery($table, $columns = ['*'], $conditions = [])
     {
-        $db = Factory::getDbo();
+        $db = self::moGetDatabase();
         $query = $db->getQuery(true)
                     ->select(implode(',', $columns))
                     ->from($db->quoteName($table));
@@ -92,7 +138,7 @@ class MoUserSyncUtility{
 
 	public static function moGetTableDetails($tableName,$condition=TRUE,$method='loadAssoc',$columns='*'){	
 
-        $db = Factory::getDbo();
+        $db = self::moGetDatabase();
         $query = $db->getQuery(true);
         $columns = is_array($columns)?$db->quoteName($columns):$columns;
         $query->select($columns);
@@ -145,7 +191,7 @@ class MoUserSyncUtility{
 
     public function _load_db_values($table){
   
-        $db = Factory::getDbo();
+        $db = self::moGetDatabase();
         $query = $db->getQuery(true);
         $query->select('*');
         $query->from($db->quoteName($table));
@@ -156,7 +202,7 @@ class MoUserSyncUtility{
     }
 
     public function loadDBValues($table, $load_by, $col_name = '*', $id_name = 'id', $id_value = 1){
-        $db = Factory::getDbo();
+        $db = self::moGetDatabase();
         $query = $db->getQuery(true);
 
         $query->select($col_name);

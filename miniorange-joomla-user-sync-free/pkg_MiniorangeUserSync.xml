@@ -2,7 +2,7 @@
 <extension version="1.0" type="package" method="upgrade">
     <name>User Provisioning/ User Sync</name>
     <packagename>MiniorangeUserSync</packagename>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <author>miniOrange Security Software Pvt. Ltd.</author>
     <license>GNU General Public License version 3; see LICENSE.txt</license>
     <authorEmail>info@xecurify.com</authorEmail>

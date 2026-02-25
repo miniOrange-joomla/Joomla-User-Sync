@@ -8,7 +8,7 @@
 	<authorUrl>http://miniorange.com</authorUrl>
 	<copyright>Copyright(C) 2015 miniOrange. All Rights Reserved.</copyright>
 	<license>GNU General Public License version 3; see LICENSE.txt</license>
-	<version>1.0.5</version>
+	<version>1.0.6</version>
 	<description>COM_MINIORANGE_USERSYNC_DESCRIPTION</description>
  
 	<install> 
@@ -16,6 +16,11 @@
 			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
 		</sql>
 	</install>
+	<update>
+		<schemas>
+			<schemapath type="mysql">sql/updates/mysql</schemapath>
+		</schemas>
+	</update>
 	<uninstall>
 		<sql>
 			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>

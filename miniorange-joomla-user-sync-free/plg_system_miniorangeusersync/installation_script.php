@@ -11,6 +11,7 @@ defined('_JEXEC') or die('Restricted access');
  * @contact     info@xecurify.com
  */
 use Joomla\CMS\Factory;
+include_once JPATH_SITE . DIRECTORY_SEPARATOR . 'administrator' . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_miniorange_usersync' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'MoUserSyncUtility.php';
 class plgSystemMiniorangeusersyncInstallerScript
 {
     /**
@@ -22,7 +23,7 @@ class plgSystemMiniorangeusersyncInstallerScript
      */
     public function install($parent) 
     {
-          $db  = Factory::getDbo();
+          $db  = MoUserSyncUtility::moGetDatabase();
           $query = $db->getQuery(true);
           $query->update('#__extensions');
           $query->set($db->quoteName('enabled') . ' = 1');

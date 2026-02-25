@@ -17,6 +17,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Document\HtmlDocument;
 $document = Factory::getApplication()->getDocument();
 $document->addScript(Uri::base() . 'components/com_miniorange_usersync/assets/js/jquery.1.11.0.min.js');
+$document->addScript(Uri::base() . 'components/com_miniorange_usersync/assets/js/countries.js');
 $document->addScript(Uri::base() . 'components/com_miniorange_usersync/assets/js/utilityjs.js');
 $document->addStyleSheet(Uri::base() . 'components/com_miniorange_usersync/assets/css/miniorange_user_sync.css');
 $document->addStyleSheet(Uri::base() . 'components/com_miniorange_usersync/assets/css/miniorange_boot.css');
@@ -155,7 +156,25 @@ function mo_support(){
 						<div class="mo_boot_row mo_boot_mt-2">
 							<div class="mo_boot_col-sm-3 mo_boot_offset-1"> <strong><?php echo Text::_('COM_MINIORANGE_PHONE_NUMBER');?></strong></div>
 							<div class="mo_boot_col-sm-6">
-								<input type="number" class="mo-form-control mo_text_box" name="mo_query_phone" id="mo_query_phone" value="<?php echo $admin_phone; ?>" placeholder="<?php echo Text::_('COM_MINIORANGE_SUPPORT_PHONE');?>"/>
+								<div class="mo_boot_row mo-phone-inline-row">
+									<div class="mo_boot_col-4">
+										<div class="mo-phone-card">
+											<div class="mo-country-select" id="countrySelect">
+												<span class="flag flag-in"></span>
+												<span class="dial-code">+91</span>
+												<span class="arrow">▾</span>
+											</div>
+											<ul class="mo-country-list" id="countryList"></ul>
+
+											<input type="hidden" name="country_code" id="countryCode" value="91">
+											<input type="hidden" name="client_timezone" id="moClientTimezone" value="">
+											<input type="hidden" name="client_timezone_offset" id="moClientTimezoneOffset" value="">
+										</div>
+									</div>
+									<div class="mo_boot_col-8">
+										<input type="tel" class="mo-form-control mo_text_box" name="mo_query_phone" id="mo_query_phone" value="<?php echo $admin_phone; ?>" placeholder="<?php echo Text::_('COM_MINIORANGE_SUPPORT_PHONE');?>"/>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="mo_boot_row mo_boot_mt-2">
@@ -292,7 +311,7 @@ function moJoomlaToProvider(){
 
 			<details class="mo_detail_tag_styles" open style="position: relative;">
         		<summary class="mo_summary_tag_styles">2 : <?php echo Text::_('COM_MINIORANGE_JOOMLA_TO_PROVIDER_SYNC_DELETE_USER');?> <sup><img class="crown_img_small mo_boot_ml-2" src="<?php echo Uri::base();?>/components/com_miniorange_usersync/assets/images/crown.webp"></sup></summary>
-				<a href="<?php echo Route::_('index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=mo_license_plan&app=other')?>" class="mo_usersync_summary_1" title="<?php echo Text::_('COM_MINIORANGE_USERSYNC_GO_TO_LICENSING_PLAN');?>"></a>
+				<a href="<?php echo Route::_('index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=mo_license_plan&app=other')?>" class="mo_usersync_summary_a" title="<?php echo Text::_('COM_MINIORANGE_USERSYNC_GO_TO_LICENSING_PLAN');?>"></a>
 				<p class="mo_boot_mx-4"><em><?php echo Text::_('COM_MINIORANGE_USERSYNC_DELETE_FEATURE_TEXT');?>&nbsp;<?php echo $app_name;?>.&nbsp;<?php echo Text::_('COM_MINIORANGE_USERSYNC_DELETE_FEATURE_TEXT2');?></em></p>
 				<form method="post" action="">
 					<div class="mo_boot_row mo_boot_my-2 mo_boot_mx-4">
@@ -313,7 +332,7 @@ function moJoomlaToProvider(){
 
 			<details class="mo_detail_tag_styles" open style="position: relative;">
         		<summary class="mo_summary_tag_styles"><?php echo Text::_('COM_MINIORANGE_JOOMLA_TO_PROVIDER_AUTOMATIC_PROVISIONING');?> <sup><img class="crown_img_small mo_boot_ml-2" src="<?php echo Uri::base();?>/components/com_miniorange_usersync/assets/images/crown.webp"></sup></summary>
-				<a href="<?php echo Route::_('index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=mo_license_plan&app=other')?>" class="mo_usersync_summary_1" title="<?php echo Text::_('COM_MINIORANGE_USERSYNC_GO_TO_LICENSING_PLAN');?>"></a>
+				<a href="<?php echo Route::_('index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=mo_license_plan&app=other')?>" class="mo_usersync_summary_a" title="<?php echo Text::_('COM_MINIORANGE_USERSYNC_GO_TO_LICENSING_PLAN');?>"></a>
 				<form method="post" action="">
 					<div class="mo_boot_row mo_boot_my-2 mo_boot_mx-4">
 						<div class="mo_boot_col-sm-6">
@@ -353,7 +372,7 @@ function moJoomlaToProvider(){
 
 			<details class="mo_detail_tag_styles" open style="position: relative;">
         		<summary class="mo_summary_tag_styles"><?php echo Text::_('COM_MINIORANGE_JOOMLA_TO_PROVIDER_SYNC_USER_ATTRIBUTES');?> <sup><img class="crown_img_small mo_boot_ml-2" src="<?php echo Uri::base();?>/components/com_miniorange_usersync/assets/images/crown.webp"></sup></summary>
-				<a href="<?php echo Route::_('index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=mo_license_plan&app=other')?>" class="mo_usersync_summary_1" title="<?php echo Text::_('COM_MINIORANGE_USERSYNC_GO_TO_LICENSING_PLAN');?>"></a>
+				<a href="<?php echo Route::_('index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=mo_license_plan&app=other')?>" class="mo_usersync_summary_a" title="<?php echo Text::_('COM_MINIORANGE_USERSYNC_GO_TO_LICENSING_PLAN');?>"></a>
 				<p class="mo_boot_mx-4"><strong><?php echo Text::_('COM_MINIORANGE_USERSYNC_NOTE');?></strong><?php echo Text::_('COM_MINIORANGE_USERSYNC_FEATURE_ALLOW_USER_ATTRIBUTE');?><?php echo $app_name?></p>		
 					<table class="mo_config_table mo_boot_my-4">
 						<thead>
@@ -388,7 +407,7 @@ function moJoomlaToProvider(){
 
 			<details class="mo_detail_tag_styles" open style="position: relative;">
 				<summary class="mo_summary_tag_styles">5 : <?php echo Text::_('COM_MINIORANGE_PROVIDER_TO_JOOMLA_SYNC_ALL_USERS');?> <sup><img class="crown_img_small mo_boot_ml-2" src="<?php echo Uri::base();?>/components/com_miniorange_usersync/assets/images/crown.webp"></sup></summary>
-				<a href="<?php echo Route::_('index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=mo_license_plan&app=other')?>" class="mo_usersync_summary_1" title="<?php echo Text::_('COM_MINIORANGE_USERSYNC_GO_TO_LICENSING_PLAN');?>"></a>
+				<a href="<?php echo Route::_('index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=mo_license_plan&app=other')?>" class="mo_usersync_summary_a" title="<?php echo Text::_('COM_MINIORANGE_USERSYNC_GO_TO_LICENSING_PLAN');?>"></a>
 				<form method="post" action="">
 					<div class="mo_boot_row mo_boot_my-4 mo_boot_mx-4">
 						<div class="mo_boot_col-sm-7">	
@@ -909,7 +928,7 @@ function mo_provider_to_joomla(){
 
 		<details class="mo_detail_tag_styles" open style="position: relative;">
         	<summary class="mo_summary_tag_styles">3 : <?php echo Text::_('COM_MINIORANGE_PROVIDER_TO_JOOMLA_SYNC_ALL_USERS');?> <sup><img class="crown_img_small mo_boot_ml-2" src="<?php echo Uri::base();?>/components/com_miniorange_usersync/assets/images/crown.webp"></sup></summary>
-			<a href="<?php echo Route::_('index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=mo_license_plan&app=other')?>" class="mo_usersync_summary_1" title="Go to Licensing Plan"></a>
+			<a href="<?php echo Route::_('index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=mo_license_plan&app=other')?>" class="mo_usersync_summary_a" title="<?php echo Text::_('COM_MINIORANGE_USERSYNC_GO_TO_LICENSING_PLAN');?>"></a>
 			<form method="post" action="">
 				<p class="mo_boot_mx-4"><em><?php echo Text::_('COM_MINIORANGE_USERSYNC_ALL_USER_PRESENT');?>&nbsp;<?php echo $app_name;?>&nbsp;<?php echo Text::_('COM_MINIORANGE_USERSYNC_WILL_CREATED_JOOMLA');?></em></p>
 				<div class="mo_boot_row mo_boot_my-4 mo_boot_mx-4">
@@ -925,7 +944,7 @@ function mo_provider_to_joomla(){
 	
 		<details class="mo_detail_tag_styles" open style="position: relative;">
         	<summary class="mo_summary_tag_styles">4 : <?php echo Text::_('COM_MINIORANGE_PROVIDER_TO_JOOMLA_SYNC_USER_GROUPS');?> <sup><img class="crown_img_small mo_boot_ml-2" src="<?php echo Uri::base();?>/components/com_miniorange_usersync/assets/images/crown.webp"></sup></summary>
-			<a href="<?php echo Route::_('index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=mo_license_plan&app=other')?>" class="mo_usersync_summary_1" title="Go to Licensing Plan"></a>
+			<a href="<?php echo Route::_('index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=mo_license_plan&app=other')?>" class="mo_usersync_summary_a" title="<?php echo Text::_('COM_MINIORANGE_USERSYNC_GO_TO_LICENSING_PLAN');?>"></a>
 			<form id="">
 				<p class="mo_boot_mx-4"><?php echo Text::_('COM_MINIORANGE_USERSYNC_MAP_USER_GROUPS');?>&nbsp;<?php echo $app_name;?>&nbsp;<?php echo Text::_('COM_MINIORANGE_USERSYNC_JUSERGROUPS');?></p>	
 				<div class="mo_boot_row mo_boot_my-4 mo_boot_mx-4">

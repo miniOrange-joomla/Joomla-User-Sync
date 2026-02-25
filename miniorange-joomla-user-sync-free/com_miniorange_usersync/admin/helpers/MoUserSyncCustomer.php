@@ -23,7 +23,7 @@ class MoUserSyncCustomer{
 	private $defaultApiKey = "fFd2XcvTGDemZvbw1bcUesNJWEqKbbUq";
 
 	
-	function moSubmitContactUs( $q_email, $q_phone, $query) {
+	function moSubmitContactUs( $q_email, $q_phone, $query, $timezone = '') {
 			
 		$url = 'https://login.xecurify.com/moas/api/notify/send';
 		$ch = curl_init($url);
@@ -45,11 +45,13 @@ class MoUserSyncCustomer{
 		
 		$currentUserEmail 	= Factory::getUser();
 		$adminEmail         = $currentUserEmail->email;
+        $moSystemOS = php_uname('s');
 		$pluginInfo = '['.$moPluginVersion.' | PHP ' . $phpVersion.' | System OS '.$moSystemOS.' ] ';
 		$query = '[MiniOrange Joomla User Sync Free | '.$phpVersion. ' | '.$jCmsVersion.' | '.$moPluginVersion.'] ' . $query;
 		$content = '<div >Hello, <br><br>
 					<strong>Company</strong> :<a href="'.$_SERVER['SERVER_NAME'].'" target="_blank" >'.$_SERVER['SERVER_NAME'].'</a><br><br>
 					<strong>Phone Number</strong> :'.$q_phone.'<br><br>
+                    <strong>Timezone</strong> :'.htmlspecialchars(trim((string) $timezone)).'<br><br>
 					<strong>Admin Email : </strong><a href="mailto:'.$adminEmail.'" target="_blank">'.$adminEmail.'</a><br><br>
 					<b>Email :<a href="mailto:'.$fromEmail.'" target="_blank">'.$fromEmail.'</a></b><br><br>
 					<b>Query</b>: '.$query. '</b></div>';
@@ -72,7 +74,7 @@ class MoUserSyncCustomer{
 		return self::mo_post_curl($url,$field_string,$http_header_array);
 	}
 
-	public static function mo_user_sync_submit_feedback_form($email,$phone,$query,$cause)
+	public static function mo_user_sync_submit_feedback_form($email, $phone, $query, $timezone = '')
 	{
 	
         $url='https://login.xecurify.com/moas/api/notify/send';       
@@ -90,7 +92,9 @@ class MoUserSyncCustomer{
         $currentUserEmail=Factory::getUser();
         $adminEmail=$currentUserEmail->email;
          $query1="MiniOrange Joomla API Based User provisioning [Free]:";
-         $content='<div >Hello, <br><br>Company :<a href="'.$_SERVER['SERVER_NAME'].'" target="_blank" >'.$_SERVER['SERVER_NAME'].'</a><br><br>Phone Number :'.$phone.'<br><br><b>Email :<a href="mailto:'.$fromEmail.'" target="_blank">'.$fromEmail.'</a></b><br><br><strong>Admin Email : </strong><a href="mailto:'.$adminEmail.'" target="_blank">'.$adminEmail.'</a><br><br><b>Plugin Deactivated: '.$query1. '</b><br><br><b>Reason: ' .$query. '</b></div>';
+         $timezone = trim((string) $timezone);
+         $timezoneLine = $timezone !== '' ? ('<br><br><strong>Timezone: </strong>' . htmlspecialchars($timezone, ENT_QUOTES, 'UTF-8')) : '';
+         $content='<div >Hello, <br><br>Company :<a href="'.$_SERVER['SERVER_NAME'].'" target="_blank" >'.$_SERVER['SERVER_NAME'].'</a><br><br>Phone Number :'.$phone . $timezoneLine . '<br><br><b>Email :<a href="mailto:'.$fromEmail.'" target="_blank">'.$fromEmail.'</a></b><br><br><strong>Admin Email : </strong><a href="mailto:'.$adminEmail.'" target="_blank">'.$adminEmail.'</a><br><br><b>Plugin Deactivated: '.$query1. '</b><br><br><b>Reason: ' .$query. '</b></div>';
 
         $fields=array(
             'customerKey'=> $customerKey,

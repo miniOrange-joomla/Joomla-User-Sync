@@ -14,6 +14,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 use Joomla\CMS\Factory;
 $userList = array();
 Factory::getApplication()->set('moUserList', $userList);
+include_once JPATH_SITE . DIRECTORY_SEPARATOR . 'administrator' . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_miniorange_usersync' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'MoUserSyncUtility.php';
 class MoOkta
 {
     private $baseUrl="";
@@ -171,7 +172,7 @@ class MoOkta
         $userDetails = Authorization::moGetAccessToken($url,$header,$post,$post_fields);
       
         $usernameToSync = $username[0]['Name'];
-        $db = Factory::getDBO();
+        $db = MoUserSyncUtility::moGetDatabase();
         $query = $db->getQuery(true)
            ->select('*')
            ->from('#__users')
@@ -224,7 +225,7 @@ class MoOkta
         $oktaDetails=new MoOkta();
         $url = $oktaDetails->getBaseUrl().'/api/v1/users?activate=true';
         
-        $db = Factory::getDBO();
+        $db = MoUserSyncUtility::moGetDatabase();
         $query = $db->getQuery(true)
         ->select('*')
         ->from('#__users')

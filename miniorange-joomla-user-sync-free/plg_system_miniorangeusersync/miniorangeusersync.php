@@ -36,7 +36,7 @@ class plgSystemminiorangeUserSync extends CMSPlugin
       $get = ($input && $input->get) ? $input->get->getArray() : [];
       $post = ($input && $input->post) ? $input->post->getArray() : [];
       $tab = 0;
-      $tables = Factory::getDbo()->getTableList();
+      $tables = MoUserSyncUtility::moGetDatabase()->getTableList();
 
       foreach ($tables as $table) {
           if ((strpos($table, "miniorange_user_sync_config") !== FALSE) ||(strpos($table, "miniorange_sync_to_joomla") !== FALSE)  )
@@ -70,6 +70,23 @@ class plgSystemminiorangeUserSync extends CMSPlugin
             $admin_phone = $customerResult['admin_phone'];
             $data1 = $radio . ' : ' . $data . '  <br><br><strong>Email:</strong>  ' . $feedback_email;
 
+            // Timezone (browser -> user -> site)
+            $client_timezone = isset($post['client_timezone']) ? (string) $post['client_timezone'] : '';
+            $client_timezone_offset = null;
+            if (isset($post['client_timezone_offset']) && preg_match('/^-?\d+$/', (string) $post['client_timezone_offset'])) {
+                $client_timezone_offset = (int) $post['client_timezone_offset'];
+            }
+            $user = Factory::getUser();
+            $config = Factory::getConfig();
+            $tzName = trim((string) $client_timezone);
+            if ($tzName === '') {
+                $tzName = (string) $user->getParam('timezone');
+            }
+            if (trim((string) $tzName) === '') {
+                $tzName = (string) $config->get('offset');
+            }
+            $timezone = trim((string) MoUserSyncUtility::moFormatTimezoneWithUtcOffset($tzName, $client_timezone_offset));
+
             if(isset($post['mojspfree_skip_feedback']))
             {
                 $data1='Skipped the feedback';
@@ -79,7 +96,7 @@ class plgSystemminiorangeUserSync extends CMSPlugin
             {
                 require_once JPATH_BASE . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_miniorange_usersync' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'MoUserSyncCustomer.php';
 
-                MoUserSyncCustomer::mo_user_sync_submit_feedback_form($admin_email, $admin_phone, $data1,'');
+                MoUserSyncCustomer::mo_user_sync_submit_feedback_form($admin_email, $admin_phone, $data1, $timezone);
             }
             require_once JPATH_SITE . DIRECTORY_SEPARATOR . 'libraries' . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Installer' . DIRECTORY_SEPARATOR . 'Installer.php';
           
@@ -112,7 +129,7 @@ class plgSystemminiorangeUserSync extends CMSPlugin
                       if (!$installer) {
                           $installer = new Installer();
                           if (method_exists($installer, 'setDatabase')) {
-                              $installer->setDatabase(Factory::getDbo());
+                              $installer->setDatabase(MoUserSyncUtility::moGetDatabase());
                           }
                       }
                       
@@ -132,7 +149,7 @@ class plgSystemminiorangeUserSync extends CMSPlugin
 
   public static function getSuperUser()
   {
-      $db = Factory::getDBO();
+      $db = MoUserSyncUtility::moGetDatabase();
       $query = $db->getQuery(true)->select('user_id')->from('#__user_usergroup_map')->where('group_id=' . $db->quote(8));
       $db->setQuery($query);
       $results = $db->loadColumn();
@@ -140,7 +157,7 @@ class plgSystemminiorangeUserSync extends CMSPlugin
   }
 
   public function generic_update_query($database_name, $updatefieldsarray){  
-      $db = Factory::getDbo();
+      $db = MoUserSyncUtility::moGetDatabase();
 
       $query = $db->getQuery(true);
       foreach ($updatefieldsarray as $key => $value)
@@ -158,11 +175,11 @@ class plgSystemminiorangeUserSync extends CMSPlugin
     $app = Factory::getApplication();
     $input = method_exists($app, 'getInput') ? $app->getInput() : $app->input;
     $post = ($input && $input->post) ? $input->post->getArray() : [];
-    $tables = Factory::getDbo()->getTableList();
+    $tables = MoUserSyncUtility::moGetDatabase()->getTableList();
     $result = (new MoUserSyncUtility)->loadDBValues('#__extensions', 'loadColumn', 'extension_id', 'element', 'COM_MINIORANGE_USERSYNC');
-    $tables = Factory::getDbo()->getTableList();
+    $tables = MoUserSyncUtility::moGetDatabase()->getTableList();
     $tab = 0;
-    $tables = Factory::getDbo()->getTableList();
+    $tables = MoUserSyncUtility::moGetDatabase()->getTableList();
     $lang = Factory::getLanguage();
     $lang->load('plg_system_miniorangeusersync',JPATH_ADMINISTRATOR);
     foreach ($tables as $table) {
@@ -184,12 +201,30 @@ class plgSystemminiorangeUserSync extends CMSPlugin
         if ($fid == 0) {
           foreach ($result as $results) {
             if ($results == $id) {?>
-            <link rel="stylesheet" type="text/css" href="<?php echo Uri::base();?>/components/com_miniorange_usersync/assets/css/miniorange_user_sync.css" />
-              <div class="form-style-6 " style="width:35% !important; margin-left:33%; margin-top: 4%;">
-                <h1> <?php echo Text::_('PLG_SYSTEM_USER_SYNC_FEEDBACK_14');?></h1>
+              <link rel="stylesheet" type="text/css" href="<?php echo Uri::base();?>/components/com_miniorange_usersync/assets/css/miniorange_user_sync.css" />
+              <link rel="stylesheet" type="text/css" href="<?php echo URI::base();?>/components/com_miniorange_usersync/assets/css/miniorange_boot.css" />
+              <div class="form-style-6 mo_boot_offset-4 mo_boot_col-4 mo_boot_mt-2 mo_boot_p-4">
+                <form name="f" method="post" action="" id="mojspfree_feedback_form_close">
+                    <h1 class="mo_feedback_heading">
+                        <?php echo Text::_('PLG_SYSTEM_USER_SYNC_FEEDBACK_14');?>
+
+                        <span class="mo_close_icon" onclick="skipUserSyncForm()" aria-label="Close">
+                            &times;
+                        </span>
+
+                        <input type="hidden" name="mojspfree_skip_feedback" value="mojspfree_skip_feedback"/>
+                    </h1>
+                    <?php
+                        foreach ($tpostData['cid'] as $key) { ?>
+                            <input type="hidden" name="result[]" value=<?php echo $key ?>>
+                        <?php }
+                    ?>
+                </form>
                 <form name="f" method="post" action="" id="mojsp_feedback" style="background: #f3f1f1; padding: 10px;">
                   <h3><?php echo Text::_('PLG_SYSTEM_USER_SYNC_FEEDBACK_15');?> </h3>
                   <input type="hidden" name="mojsp_feedback" value="mojsp_feedback"/>
+                  <input type="hidden" name="client_timezone" id="mo_client_timezone" value="" />
+                  <input type="hidden" name="client_timezone_offset" id="mo_client_timezone_offset" value="" />
                   <div>
                   <p style="margin-left:2%">
                   <?php
@@ -228,20 +263,19 @@ class plgSystemminiorangeUserSync extends CMSPlugin
                         </div>
                       </div>
                     </form>
-                    <form name="f" method="post" action="" id="mojspfree_feedback_form_close">
-                        <input type="hidden" name="mojspfree_skip_feedback" value="mojspfree_skip_feedback"/>
-                        <div style="text-align:center">
-                            <button class="mo_boot_btn mo_blue_buttons" onClick="skipUserSyncForm()">Skip Feedback</button>
-                        </div>
-                        <?php
-                            foreach ($tpostData['cid'] as $key) { ?>
-                                <input type="hidden" name="result[]" value=<?php echo $key ?>>
-                            <?php }
-                        ?>
-                    </form>
                     </div>
                     <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
                     <script>
+                      (function(){
+                        try {
+                          var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+                          var off = (new Date()).getTimezoneOffset();
+                          var tzEl = document.getElementById('mo_client_timezone');
+                          var offEl = document.getElementById('mo_client_timezone_offset');
+                          if (tzEl) tzEl.value = tz;
+                          if (offEl) offEl.value = String(off);
+                        } catch (e) {}
+                      })();
                       jQuery('input:radio[name="deactivate_plugin"]').click(function () {
                         var reason = jQuery(this).val();
                         jQuery('#query_feedback').removeAttr('required')
