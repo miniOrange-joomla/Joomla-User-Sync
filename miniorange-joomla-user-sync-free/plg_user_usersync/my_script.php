@@ -12,8 +12,13 @@ jimport('com_miniorange_usersync.admin.helpers.MoUserSyncCustomer');
  * @contact     info@xecurify.com
  */
 use Joomla\CMS\Factory;
-include_once JPATH_SITE . DIRECTORY_SEPARATOR . 'administrator' . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_miniorange_usersync' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'MoUserSyncUtility.php';
-class plgUserMiniorangeUserSyncInstallerScript
+
+$helperPath = JPATH_ADMINISTRATOR . '/components/com_miniorange_usersync/helpers/MoUserSyncUtility.php';
+if (is_file($helperPath)) {
+    include_once $helperPath;
+}
+
+class plgUserUserSyncInstallerScript
 {
     /**
      * This method is called after a component is installed.
@@ -24,11 +29,14 @@ class plgUserMiniorangeUserSyncInstallerScript
      */
     public function install($parent) 
     {
+        if (!class_exists('MoUserSyncUtility')) {
+            return;
+        }
         $db  = MoUserSyncUtility::moGetDatabase();
           $query1 = $db->getQuery(true);
           $query1->update('#__extensions');
           $query1->set($db->quoteName('enabled') . ' = 1');
-          $query1->where($db->quoteName('element') . ' = ' . $db->quote('miniorangeusersync'));
+          $query1->where($db->quoteName('element') . ' = ' . $db->quote('usersync'));
           $query1->where($db->quoteName('type') . ' = ' . $db->quote('plugin'));
           $db->setQuery($query1);
           $db->execute();

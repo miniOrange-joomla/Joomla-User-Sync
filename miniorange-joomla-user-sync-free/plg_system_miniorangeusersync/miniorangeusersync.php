@@ -24,13 +24,19 @@ use Joomla\CMS\Uri\Uri;
 $lang = Factory::getLanguage();
 $lang->load('plg_system_miniorangeusersync',JPATH_ADMINISTRATOR);
 
-include_once JPATH_SITE . DIRECTORY_SEPARATOR . 'administrator' . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_miniorange_usersync' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'MoUserSyncUtility.php';
+$moUsersyncHelperPath = JPATH_ADMINISTRATOR . '/components/com_miniorange_usersync/helpers/MoUserSyncUtility.php';
+if (is_file($moUsersyncHelperPath)) {
+    include_once $moUsersyncHelperPath;
+}
 
 class plgSystemminiorangeUserSync extends CMSPlugin
 {
 
 	public function onAfterInitialise()
 	{
+		if (!class_exists('MoUserSyncUtility')) {
+			return;
+		}
 		  $app = Factory::getApplication();
       $input = method_exists($app, 'getInput') ? $app->getInput() : $app->input;
       $get = ($input && $input->get) ? $input->get->getArray() : [];
@@ -149,6 +155,9 @@ class plgSystemminiorangeUserSync extends CMSPlugin
 
   public static function getSuperUser()
   {
+      if (!class_exists('MoUserSyncUtility')) {
+          return null;
+      }
       $db = MoUserSyncUtility::moGetDatabase();
       $query = $db->getQuery(true)->select('user_id')->from('#__user_usergroup_map')->where('group_id=' . $db->quote(8));
       $db->setQuery($query);
@@ -156,7 +165,10 @@ class plgSystemminiorangeUserSync extends CMSPlugin
       return  $results[0];
   }
 
-  public function generic_update_query($database_name, $updatefieldsarray){  
+  public function generic_update_query($database_name, $updatefieldsarray){
+      if (!class_exists('MoUserSyncUtility')) {
+          return;
+      }
       $db = MoUserSyncUtility::moGetDatabase();
 
       $query = $db->getQuery(true);
@@ -172,6 +184,9 @@ class plgSystemminiorangeUserSync extends CMSPlugin
 	
   function onExtensionBeforeUninstall($id)
   {
+    if (!class_exists('MoUserSyncUtility')) {
+        return;
+    }
     $app = Factory::getApplication();
     $input = method_exists($app, 'getInput') ? $app->getInput() : $app->input;
     $post = ($input && $input->post) ? $input->post->getArray() : [];

@@ -187,7 +187,7 @@ class pkg_MiniorangeUserSyncInstallerScript
    <h3>Steps to use the User Sync plugin</h3>
     <ul>
         <li>Click on <b>Components</b></li>
-        <li>Click on <b>miniOrange User Sync</b> and select <b>Manage Application </b>tab</li>
+        <li>Click on <b>miniOrange User Sync</b> and select <b>Configure Application </b>tab</li>
         <li>You can start configuring</li>
     </ul>
     <div class="mo-row">

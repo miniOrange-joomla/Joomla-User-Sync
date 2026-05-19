@@ -41,7 +41,7 @@ class MoUserSyncCustomer{
 		$jVersion = new Version;
 		$jCmsVersion = $jVersion->getShortVersion();
 		$moPluginVersion = MoUserSyncUtility::moGetPluginVersion();
-		$subject = "Query for MiniOrange Joomla API Based User Provisioning Free - ".$fromEmail;
+		$subject = "Query for Joomla User Provisioning Free - ".$fromEmail;
 		
 		$currentUserEmail 	= Factory::getUser();
 		$adminEmail         = $currentUserEmail->email;
@@ -88,7 +88,7 @@ class MoUserSyncCustomer{
         $timestampHeader="Timestamp: " .  number_format($currentTimeInMillis, 0, '', '');
         $authorizationHeader="Authorization: " . $hashValue;
         $fromEmail=$email;
-        $subject="Feedback for miniOrange Joomla API Based User Provisioning [Free] ";
+        $subject="Joomla User Provisioning Free Feedback ";
         $currentUserEmail=Factory::getUser();
         $adminEmail=$currentUserEmail->email;
          $query1="MiniOrange Joomla API Based User provisioning [Free]:";

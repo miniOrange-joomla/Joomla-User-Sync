@@ -590,6 +590,216 @@ input[disabled]{
     background: #f5f7fa;
 }
 
+.mus-page {
+    display: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Section heading */
+.mus-section-heading {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 .35rem;
+}
+
+/* Steps strip */
+.mus-steps-section {
+    background: #F3F7FC;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5eaf2;
+    border-radius: 10px;
+    padding: 1.35rem 1.5rem;
+    margin-bottom: 1.75rem;
+}
+
+.mus-steps-section .mus-section-heading {
+    margin-bottom: 1.1rem;
+}
+
+.mus-steps-row {
+    display: flex;
+    gap: 0;
+}
+
+.mus-step-box {
+    flex: 1;
+    position: relative;
+    padding-right: 1.5rem;
+}
+
+.mus-step-box--last {
+    padding-right: 0;
+}
+
+.mus-step-circle {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: #001b4c;
+    color: #fff;
+    font-size: .8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: .65rem;
+    position: relative;
+    z-index: 1;
+}
+
+.mus-step-connector {
+    position: absolute;
+    top: 1rem;
+    left: 2rem;
+    right: 0;
+    height: 2px;
+    background: #cbd5e1;
+}
+
+.mus-step-box h4 {
+    font-size: .875rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 .3rem;
+}
+
+.mus-step-box p {
+    font-size: .82rem;
+    color: #6b7280;
+    line-height: 1.5;
+    margin: 0;
+    max-width: 14rem;
+}
+
+/* Provider cards section */
+.mus-providers-section {
+    background: #F3F7FC;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5eaf2;
+    border-radius: 10px;
+    padding: 1.35rem 1.5rem;
+}
+
+.mus-providers-header {
+    margin-bottom: 1.1rem;
+}
+
+.mus-providers-desc {
+    font-size: .88rem;
+    color: #6b7280;
+    margin: .3rem 0 0;
+    line-height: 1.5;
+}
+
+.mus-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.mus-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: .85rem;
+    background: #f8fafd;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color .18s, box-shadow .2s, transform .2s;
+    cursor: pointer;
+}
+
+.mus-card:hover {
+    border-color: #1a5fc8;
+    box-shadow: 0 8px 24px rgba(0, 27, 76, .11);
+    transform: translateY(-3px);
+    text-decoration: none;
+    color: inherit;
+}
+
+.mus-card:focus {
+    outline: none;
+    border-color: #001b4c;
+    box-shadow: 0 0 0 3px rgba(0, 27, 76, .18);
+    color: inherit;
+    text-decoration: none;
+}
+
+.mus-card-logo-wrap {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    background: #fff;
+    border: 1px solid #e8edf3;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+}
+
+.mus-card-logo {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+}
+
+.mus-card-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.mus-card-name {
+    font-size: .925rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 .25rem;
+    line-height: 1.3;
+}
+
+.mus-card:hover .mus-card-name {
+    color: #001b4c;
+}
+
+.mus-card-usecase {
+    font-size: .78rem;
+    color: #6b7280;
+    line-height: 1.45;
+    margin: 0 0 .55rem;
+    flex-grow: 1;
+}
+
+.mus-card-cta {
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: #1a5fc8;
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+    margin-top: auto;
+}
+
+.mus-card-cta-arrow {
+    transition: transform .18s;
+}
+
+.mus-card:hover .mus-card-cta-arrow {
+    transform: translateX(4px);
+}
+
+.mus-card:hover .mus-card-cta {
+    color: #001b4c;
+}
+
 :root[data-color-scheme=dark] {
 
     body{
@@ -780,5 +990,66 @@ input[disabled]{
 
     .mo-country-list li:hover {
         background: #0f151d;
+    }
+
+    .mus-section-heading {
+        color: #fff;
+    }
+
+    .mus-steps-section {
+        background: #0f151d;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5eaf2;
+    }
+
+    .mus-step-circle {
+        background: #fff;
+        color: #000;
+    }
+
+    .mus-step-connector {
+        background: #fff;
+    }
+
+    .mus-step-box h4 {
+        color: #fff;
+    }
+
+    .mus-step-box p {
+        font-size: .82rem;
+        color: #6b7280;
+    }
+
+    .mus-providers-section {
+        background: #0f151d;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e5eaf2;
+    }
+
+    .mus-providers-desc {
+        color: #ffffff;
+    }
+
+    .mus-card {
+        background: #0f151d;
+        border: 1.5px solid #fff;
+    }
+
+    .mus-card:hover ,.mus-card:focus {
+        border-color: #fff;
+        box-shadow: 0 0 0 3px rgba(230, 230, 230, 0.18);
+    }
+
+    .mus-card-logo-wrap {
+        background: #0f151d;
+        border: 1px solid #e8edf3;
+    }
+
+    .mus-card-name ,.mus-card:hover .mus-card-name,.mus-card-usecase ,.mus-card-cta {
+        color: #fff;
+    }
+
+    .mus-card:hover .mus-card-cta {
+        color: #fff;
     }
 }

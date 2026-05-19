@@ -55,54 +55,73 @@ $configured_app = isset($mo_application_details['app_name']) && !empty($mo_appli
         </div>
     </div>
 
-    <div class="mo_boot_row" style="<?php echo $pannel_display;?>">
-		<div class="mo_boot_col-sm-12">
-        	<h1 class="mo_sync_heading mo_boot_py-2"><?php echo Text::_('COM_MINIORANGE_USERSYNC_CONFIGURE_PROVIDER');?></h1>
-			<div class="mo_boot_row">
-				<div class="mo_boot_col-sm-12">    
-					<div class="mo-user-sync-tab-content mo_boot_mx-4">
-        				<div class="mo_boot_mt-1 mo_usersync_parent">
-							<a class="logo-user-sync-cstm mo_usersync_child mo_usersync_text_decoration" href="<?php echo Uri::root().'administrator/index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=syncconfiguration&addition_option=addconfig&app=Azure&sub_tab=config';?>">
-								<img loading="lazy" width="90px" margin-top="0.9rem" src="<?php echo Uri::base().'components\com_miniorange_usersync\assets\images\azure.png';?>">
-								<br>
-								<h6 class="mo_usersync_titles">Azure</h6>
-							</a>
-					
-							<a class="logo-user-sync-cstm mo_usersync_child mo_usersync_text_decoration" href="<?php echo Uri::root().'administrator/index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=syncconfiguration&addition_option=addconfig&app=Keycloak&sub_tab=config';?>">
-								<img loading="lazy" width="90px" margin-top="0.9rem" src="<?php echo Uri::base().'components\com_miniorange_usersync\assets\images\keycloak.png';?>">
-								<br>
-								<h6 class="mo_usersync_titles">Keycloak</h6>
-							</a>
-						
-							<a class="logo-user-sync-cstm mo_usersync_child mo_usersync_text_decoration" href="<?php echo Uri::root().'administrator/index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=syncconfiguration&addition_option=addconfig&app=Okta&sub_tab=config';?>">
-								<img loading="lazy" width="90px" margin-top="0.9rem" src="<?php echo Uri::base().'components\com_miniorange_usersync\assets\images\okta.png';?>">
-								<br>
-								<h6 class="mo_usersync_titles">Okta</h6>
-							</a>
-							
-							<a class="logo-user-sync-cstm mo_usersync_child mo_usersync_text_decoration mo_boot_mb-3" href="<?php echo Uri::root().'administrator/index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=syncconfiguration&addition_option=addconfig&app=AWS&sub_tab=config';?>">
-								<img loading="lazy" width="90px" margin-top="0.9rem" src="<?php echo Uri::base().'components\com_miniorange_usersync\assets\images\cognito.png';?>">
-								<br>
-								<h6 class="mo_usersync_titles">AWS Cognito</h6>
-							</a>
 
-							<a class="logo-user-sync-cstm mo_usersync_child mo_usersync_text_decoration mo_boot_mb-3" href="<?php echo Uri::root().'administrator/index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=syncconfiguration&addition_option=addconfig&app=Salesforce&sub_tab=config';?>">
-								<img loading="lazy" width="90px" margin-top="0.9rem" src="<?php echo Uri::base().'components\com_miniorange_usersync\assets\images\salesforce.png';?>">
-								<br>
-								<h6 class="mo_usersync_titles">Salesforce</h6>
-							</a>
+<?php
+$moImgBase = Uri::base() . 'components/com_miniorange_usersync/assets/images/';
+$moIdpProviders = array(
+	array('app'=>'Azure',     'label'=>'Azure AD',        'image'=>$moImgBase.'azure.png',      'href'=>Uri::root().'administrator/index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=syncconfiguration&addition_option=addconfig&app=Azure&sub_tab=config',     'usecase'=>'COM_MINIORANGE_USERSYNC_IDP_AZURE_USECASE'),
+	array('app'=>'Keycloak',  'label'=>'Keycloak',        'image'=>$moImgBase.'keycloak.png',   'href'=>Uri::root().'administrator/index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=syncconfiguration&addition_option=addconfig&app=Keycloak&sub_tab=config', 'usecase'=>'COM_MINIORANGE_USERSYNC_IDP_KEYCLOAK_USECASE'),
+	array('app'=>'Okta',      'label'=>'Okta',            'image'=>$moImgBase.'okta.png',       'href'=>Uri::root().'administrator/index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=syncconfiguration&addition_option=addconfig&app=Okta&sub_tab=config',     'usecase'=>'COM_MINIORANGE_USERSYNC_IDP_OKTA_USECASE'),
+	array('app'=>'AWS',       'label'=>'AWS Cognito',     'image'=>$moImgBase.'cognito.png',    'href'=>Uri::root().'administrator/index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=syncconfiguration&addition_option=addconfig&app=AWS&sub_tab=config',      'usecase'=>'COM_MINIORANGE_USERSYNC_IDP_AWS_USECASE'),
+	array('app'=>'Salesforce','label'=>'Salesforce',      'image'=>$moImgBase.'salesforce.png', 'href'=>Uri::root().'administrator/index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=syncconfiguration&addition_option=addconfig&app=Salesforce&sub_tab=config','usecase'=>'COM_MINIORANGE_USERSYNC_IDP_SALESFORCE_USECASE'),
+	array('app'=>'Custom',    'label'=>'Custom Provider', 'image'=>$moImgBase.'logo.jpg',       'href'=>Uri::root().'administrator/index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=mo_support&app=other',                                                    'usecase'=>'COM_MINIORANGE_USERSYNC_IDP_CUSTOM_USECASE'),
+);
+?>
 
-							<a class="logo-user-sync-cstm mo_usersync_child mo_usersync_text_decoration mo_boot_mb-3" href="<?php echo Uri::root().'administrator/index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=mo_support&app=other';?>">
-								<img loading="lazy" width="90px" margin-top="0.9rem" src="<?php echo Uri::base().'components\com_miniorange_usersync\assets\images\logo.jpg';?>">
-								<br>
-								<h6 class="mo_usersync_titles">Custom Provider</h6>
-							</a>
-                    	</div>
-    				</div>
-       			</div>
+<div class="mus-page" style="<?php echo $pannel_display;?>">
+	<h2 class="mo_sync_heading mo_boot_my-3"><?php echo Text::_('COM_MINIORANGE_USERSYNC_CONFIGURE_PROVIDER');?></h2>
+
+	<div class="mus-steps-section">
+		<h2 class="mus-section-heading"><?php echo Text::_('COM_MINIORANGE_USERSYNC_INFO_WORKFLOW_TITLE');?></h2>
+		<div class="mus-steps-row">
+			<div class="mus-step-box">
+				<div class="mus-step-circle">1</div>
+				<div class="mus-step-connector"></div>
+				<h4><?php echo Text::_('COM_MINIORANGE_USERSYNC_STEP1_TITLE');?></h4>
+				<p><?php echo Text::_('COM_MINIORANGE_USERSYNC_INFO_WORKFLOW_1');?></p>
+			</div>
+			<div class="mus-step-box">
+				<div class="mus-step-circle">2</div>
+				<div class="mus-step-connector"></div>
+				<h4><?php echo Text::_('COM_MINIORANGE_USERSYNC_STEP2_TITLE');?></h4>
+				<p><?php echo Text::_('COM_MINIORANGE_USERSYNC_INFO_WORKFLOW_2');?></p>
+			</div>
+			<div class="mus-step-box mus-step-box--last">
+				<div class="mus-step-circle">3</div>
+				<h4><?php echo Text::_('COM_MINIORANGE_USERSYNC_STEP3_TITLE');?></h4>
+				<p><?php echo Text::_('COM_MINIORANGE_USERSYNC_INFO_WORKFLOW_3');?></p>
 			</div>
 		</div>
-	</div>	
+	</div>
+
+	<!-- Provider cards -->
+	<div class="mus-providers-section mo_boot_mb-3">
+		<div class="mus-providers-header">
+			<h2 class="mus-section-heading"><?php echo Text::_('COM_MINIORANGE_USERSYNC_CHOOSE_IDP_TITLE');?></h2>
+			<p class="mus-providers-desc"><?php echo Text::_('COM_MINIORANGE_USERSYNC_CHOOSE_IDP_DESC');?></p>
+		</div>
+		<div class="mus-cards-grid">
+		<?php foreach ($moIdpProviders as $moProvider): ?>
+			<a class="mus-card" href="<?php echo htmlspecialchars($moProvider['href'], ENT_QUOTES, 'UTF-8'); ?>">
+				<div class="mus-card-logo-wrap">
+					<img class="mus-card-logo" loading="lazy" width="56" height="56"
+						alt="<?php echo htmlspecialchars($moProvider['label'], ENT_QUOTES, 'UTF-8'); ?>"
+						src="<?php echo htmlspecialchars($moProvider['image'], ENT_QUOTES, 'UTF-8'); ?>">
+				</div>
+				<div class="mus-card-body">
+					<div class="mus-card-name"><?php echo htmlspecialchars($moProvider['label'], ENT_QUOTES, 'UTF-8'); ?></div>
+					<div class="mus-card-usecase"><?php echo Text::_($moProvider['usecase']); ?></div>
+					<div class="mus-card-cta">
+						<?php echo Text::_('COM_MINIORANGE_USERSYNC_IDP_CARD_CTA'); ?>
+						<span class="mus-card-cta-arrow">&#8594;</span>
+					</div>
+				</div>
+			</a>
+		<?php endforeach; ?>
+		</div>
+	</div>
+
+</div>
       
     <div class="mo_boot_row">
         <div class="mo_boot_col-sm-12 mo_sync_tab" id="syncconfiguration" style="<?php echo (($user_sync_active_tab=='syncconfiguration')?'display:block;':'display:none;');?>">
@@ -406,7 +425,68 @@ function moJoomlaToProvider(){
 			</details>
 
 			<details class="mo_detail_tag_styles" open style="position: relative;">
-				<summary class="mo_summary_tag_styles">5 : <?php echo Text::_('COM_MINIORANGE_PROVIDER_TO_JOOMLA_SYNC_ALL_USERS');?> <sup><img class="crown_img_small mo_boot_ml-2" src="<?php echo Uri::base();?>/components/com_miniorange_usersync/assets/images/crown.webp"></sup></summary>
+				<summary class="mo_summary_tag_styles">5 : <?php echo Text::_('COM_MINIORANGE_PROVIDER_TO_JOOMLA_SYNC_USER_GROUPS');?> <sup><img class="crown_img_small mo_boot_ml-2" src="<?php echo Uri::base();?>/components/com_miniorange_usersync/assets/images/crown.webp"></sup></summary>
+				<a href="<?php echo Route::_('index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=mo_license_plan&app=other')?>" class="mo_usersync_summary_a" title="<?php echo Text::_('COM_MINIORANGE_USERSYNC_GO_TO_LICENSING_PLAN');?>"></a>
+				<form id="">
+					<p class="mo_boot_mx-4"><?php echo Text::_('COM_MINIORANGE_USERSYNC_MAP_USER_GROUPS');?>&nbsp;Joomla to&nbsp;<?php echo $app_name;?>&nbsp;<?php echo Text::_('COM_MINIORANGE_USERSYNC_USER_GRPP_MAPPING');?></p>	
+					<div class="mo_boot_row mo_boot_my-4 mo_boot_mx-4">
+						<div class="mo_boot_col-sm-12">
+							<input type="checkbox" id="mo_ldap_grp_enable" name="enable_role_mapping" value="1"  disabled> 
+							<span class="mo_boot_mx-2"><?php echo Text::_('COM_MINIORANGE_ENABLE_GROUP_MAPPING');?></span>
+							<br>
+						</div>	
+						<div class="mo_boot_col-sm-12">
+							<div class="mo_boot_row mo_boot_my-2">
+								<div class="mo_boot_col-sm-7"> <?php echo Text::_('COM_MINIORANGE_SELECT_DEFAULT_GROUPS');?>&nbsp;&nbsp;</div>
+								<div class="mo_boot_col-sm-5">	
+									<select class="mo-form-control mo_ldap_server_details" name="mapping_value_default" id="default_group_mapping" readonly>
+										<?php							
+											foreach ($groups as $group) {
+												if($group[4] != 'Super Users' || $group[4] != 'Public' || $group[4] != 'Guest'){
+													echo '<option  value = "'. $group[0].'">'.$group[4].'</option>';
+												}
+											}			
+										?>
+									</select>
+								</div>
+							</div>			
+						</div>
+					</div>	
+				</form>	
+				<p class="mo_boot_mx-4 mo_usersync_font_weight"><u><?php echo Text::_('COM_MINIORANGE_PROVIDER_TO_JOOMLA_GROUP_MAPPING');?></u></p>
+				<table class="mo_config_table mo_boot_my-4">
+					<thead>
+						<tr>
+							<th class="mo_boot_text-center"><h6><?php echo Text::_('COM_MINIORANGE_PROVIDER_TO_JOOMLA_SYNC_USER_GROUPS_SNO');?></h6></th>
+							<th><h6><?php echo $app_name;?>&nbsp;<?php echo Text::_('COM_MINIORANGE_USERSYNC_GROUPNAME');?></h6></th>
+							<th><h6><?php echo Text::_('COM_MINIORANGE_PROVIDER_TO_JOOMLA_SYNC_USER_JOOMLA_GROUP_NAME');?></h6></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="mo_boot_text-center"> 1</td>
+							<td> 
+								<input class="mo-form-control mo-search-directory-textbox" style="width: 90%;" type="text" placeholder="<?php echo $app_name;?>&nbsp;<?php echo Text::_('COM_MINIORANGE_USERSYNC_GROUPNAME');?>" value="" readonly/>
+							</td>
+							<td>
+								<input class=" mo-form-control mo-search-directory-textbox" style="width: 90%;"  type="text" required placeholder="<?php echo Text::_('COM_MINIORANGE_PROVIDER_TO_JOOMLA_SYNC_USER_JOOMLA_GROUP_NAME');?>" value="" readonly/>
+							</td>
+						</tr>
+						<tr>
+							<td class="mo_boot_text-center">2</td>
+							<td>	 
+								<input class="mo-form-control mo-search-directory-textbox" style="width: 90%;" type="text" placeholder="<?php echo $app_name;?>&nbsp;<?php echo Text::_('COM_MINIORANGE_USERSYNC_GROUPNAME');?>" value="" readonly/>
+							</td>
+							<td>
+								<input class=" mo-form-control mo-search-directory-textbox" style="width: 90%;" type="text" required placeholder="<?php echo Text::_('COM_MINIORANGE_PROVIDER_TO_JOOMLA_SYNC_USER_JOOMLA_GROUP_NAME');?>" value="" readonly/>
+							</td>
+						</tr>
+					</tbody>
+				</table>   
+			</details>
+
+			<details class="mo_detail_tag_styles" open style="position: relative;">
+				<summary class="mo_summary_tag_styles">6 : <?php echo Text::_('COM_MINIORANGE_PROVIDER_TO_JOOMLA_SYNC_ALL_USERS');?> <sup><img class="crown_img_small mo_boot_ml-2" src="<?php echo Uri::base();?>/components/com_miniorange_usersync/assets/images/crown.webp"></sup></summary>
 				<a href="<?php echo Route::_('index.php?option=com_miniorange_usersync&view=accountsetup&tab-panel=mo_license_plan&app=other')?>" class="mo_usersync_summary_a" title="<?php echo Text::_('COM_MINIORANGE_USERSYNC_GO_TO_LICENSING_PLAN');?>"></a>
 				<form method="post" action="">
 					<div class="mo_boot_row mo_boot_my-4 mo_boot_mx-4">
@@ -786,7 +866,7 @@ function mo_provider_to_joomla(){
 						<p class="mo_boot_mx-4"><?php echo Text::_('COM_MINIORANGE_PROVIDER_TO_JOOMLA_ATTRIBUTE_MAPPING_NAME');?> :</p>
 					</div>
 					<div class="mo_boot_col-sm-7">
-						<select id="mo_joomla_name" name="mo_joomla_name" required class="mo-form-control mo-form-control-select" >
+						<select id="mo_joomla_name" name="mo_joomla_name" required class="mo-form-control mo-form-control-select" required>
                             <option value="<?php echo Text::_('COM_MINIORANGE_USERSYNC_NONE_SELECTED');?>" selected><?php echo Text::_('COM_MINIORANGE_USERSYNC_SELECT');?>&nbsp;<?php echo $app_name;?>&nbsp;<?php echo Text::_('COM_MINIORANGE_USERSYNC_NAME_ATTRIBUTE');?></option>
                             <?php
                                 foreach($mo_user_attributes as $key => $value)
@@ -811,7 +891,7 @@ function mo_provider_to_joomla(){
 						<p class="mo_boot_mx-4"><?php echo Text::_('COM_MINIORANGE_PROVIDER_TO_JOOMLA_ATTRIBUTE_MAPPING_USERNAME');?> :</p>
 					</div>
 					<div class="mo_boot_col-sm-7">
-						<select id="mo_joomla_username" name="mo_joomla_username" required class="mo-form-control mo-form-control-select" >
+						<select id="mo_joomla_username" name="mo_joomla_username" required class="mo-form-control mo-form-control-select" required>
                             <option value="<?php echo Text::_('COM_MINIORANGE_USERSYNC_NONE_SELECTED');?>" selected><?php echo Text::_('COM_MINIORANGE_USERSYNC_SELECT');?>&nbsp;<?php echo $app_name;?>&nbsp;<?php echo Text::_('COM_MINIORANGE_USERSYNC_USERNAME_ATTRIBUTE');?></option>
                             <?php
                                 foreach($mo_user_attributes as $key => $value)
@@ -836,7 +916,7 @@ function mo_provider_to_joomla(){
 						<p class="mo_boot_mx-4"><?php echo Text::_('COM_MINIORANGE_PROVIDER_TO_JOOMLA_ATTRIBUTE_MAPPING_EMAIL');?> :</p>
 					</div>
 					<div class="mo_boot_col-sm-7">
-						<select id="mo_joomla_email" name="mo_joomla_email" required class="mo-form-control mo-form-control-select" >
+						<select id="mo_joomla_email" name="mo_joomla_email" required class="mo-form-control mo-form-control-select" required>
                             <option value="<?php echo Text::_('COM_MINIORANGE_USERSYNC_NONE_SELECTED');?>" selected><?php echo Text::_('COM_MINIORANGE_USERSYNC_SELECT');?>&nbsp;<?php echo $app_name;?>&nbsp;<?php echo Text::_('COM_MINIORANGE_USERSYNC_EMAIL_ATTRIBUTE');?></option>
                             <?php
                                 foreach($mo_user_attributes as $key => $value)
@@ -856,6 +936,39 @@ function mo_provider_to_joomla(){
                         </select>
 					</div>
 				</div>
+
+				<p class="mo_boot_mx-4 mo_boot_mt-3"><strong><?php echo Text::_('COM_MINIORANGE_USERSYNC_NOTE');?></strong>&nbsp;<?php echo Text::_('COM_MINIORANGE_USERSYNC_NOTE_MAP');?>&nbsp;<?php echo $app_name;?>&nbsp;<?php echo Text::_('COM_MINIORANGE_USERSYNC_NOTE_ATTRIBUTE_MAPPING');?></p>
+					
+				<h5 class="mo_boot_mx-4"><?php echo Text::_('COM_MINIORANGE_USERSYNC_USER_ATTRIBUTE_MAPPING');?><sup><img class="crown_img_small mo_boot_ml-2" src="<?php echo Uri::base();?>/components/com_miniorange_usersync/assets/images/crown.webp"></sup></h5><hr>
+
+				<div id="moProviderToJoomlaAttrDiv">
+					<div class="mo_boot_row mo_boot_text-center mo_boot_my-2 mo_boot_offset-1" id="mo_provider_to_joomla_attr_list">
+						<div class="mo_boot_col-sm-4">
+							<b><?php echo $app_name;?> <?php echo Text::_('COM_MINIORANGE_USERSYNC_CUSTOM_ATTRIBUTES');?></b>
+						</div>
+						<div class="mo_boot_col-sm-4">
+							<b>Joomla <?php echo Text::_('COM_MINIORANGE_USERSYNC_PROFILE_ATTRIBUTES');?></b>
+						</div>
+					</div>
+				</div>
+				<div class="moProviderToJoomlaAttr mo_boot_row mo_boot_text-center mo_boot_my-3 mo_boot_offset-1" id="moProviderToJoomlaRow_' . $moProviderToJoomlaSyncCounter . '">
+					<div class="mo_boot_col-sm-4"> 
+						<select class="mo-form-control provider-to-joomla-select" name="mo_provider_to_joomla_attr_provider[' . $moProviderToJoomlaSyncCounter . ']" disabled required>
+							<option value="">Select <?php echo $app_name;?> Attribute</option>
+						</select>
+					</div>
+					<div class="mo_boot_col-sm-4">      
+						<select class="mo-form-control mo_boot_mx-4" name="mo_provider_to_joomla_attr_joomla[' . $moProviderToJoomlaSyncCounter . ']" disabled required>
+							<option value="">Select Joomla Attribute</option>
+						</select>
+					</div>
+					<div class="mo_boot_col-sm-3">
+						<button type="button" class="mo_boot_btn mo_boot_btn-success mo_add_ptj_attr_btn" disabled>+</button>
+						<button type="button" class="mo_boot_btn mo_boot_btn-danger mo_remove_ptj_attr_btn" disabled>-</button>
+					</div>
+				</div>
+			
+
 				<div class="mo_boot_my-4 mo_boot_row mo_boot_mx-4">
 					<div class="mo_boot_col-sm-12 mo_boot_mx-3">
 					<input type="submit" class="btn mo_blue_buttons mo_boot_offset-6" value="<?php echo Text::_('COM_MINIORANGE_PROVIDER_TO_JOOMLA_SAVE');?>" >

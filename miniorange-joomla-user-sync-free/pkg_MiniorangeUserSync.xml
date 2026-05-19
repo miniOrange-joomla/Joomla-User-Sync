@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.0" type="package" method="upgrade">
-    <name>User Provisioning/ User Sync</name>
+    <name>Package - miniOrange User Sync</name>
     <packagename>MiniorangeUserSync</packagename>
-    <version>1.0.6</version>
+    <version>1.0.9</version>
     <author>miniOrange Security Software Pvt. Ltd.</author>
     <license>GNU General Public License version 3; see LICENSE.txt</license>
     <authorEmail>info@xecurify.com</authorEmail>
@@ -13,8 +13,8 @@
     <scriptfile>pkg_script.php</scriptfile>
     <files>
         <file type="component" id="miniorangeusersynccomponent" >com_miniorange_usersync.zip</file>
-        <file type="plugin" id="miniorangeusersync" group="user">plg_user_usersync.zip</file>
-        <file type="plugin" id="miniorangeusersyncc" group="system">plg_system_miniorangeusersync.zip</file>
+        <file type="plugin" id="usersync" group="user">plg_user_usersync.zip</file>
+        <file type="plugin" id="miniorangeusersync" group="system">plg_system_miniorangeusersync.zip</file>
     </files>
     <languages>
         <language tag="en-GB">language/en-GB/en-GB.pkg_miniorangeusersync.ini</language>
